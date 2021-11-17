@@ -4,6 +4,8 @@ from fastapi import (
     Response,
 )
 from fastapi.middleware.cors import CORSMiddleware
+from db.base import database
+
 import base64
 from PIL import Image
 from io import BytesIO
@@ -21,6 +23,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
 
 @app.post("/", status_code=200)
 async def test(req = Body(...)):
