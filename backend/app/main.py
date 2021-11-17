@@ -5,14 +5,14 @@ from fastapi import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 from db.base import database
-
+from endpoints import users
 import base64
 from PIL import Image
 from io import BytesIO
 import time
 
 app = FastAPI()
-
+app.include_router(users.router, prefix='/users', tags=["users"])
 origins = ["*"]
 
 app.add_middleware(
