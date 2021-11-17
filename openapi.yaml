@@ -1,0 +1,115 @@
+openapi: 3.0.2
+
+info:
+  version: 0.0.1
+  title: TimeTracker
+  description: TimeTracker for Ipatov School
+  x-config:
+    schema:
+      type: object
+      properties:
+        login:
+          type: string
+          description: Логин
+        password:
+          type: string
+          description: Пароль
+      required:
+        - login
+        - password
+servers:
+  - url: 165.22.81.13
+
+paths:
+  /sign-in:
+    post:
+      operationId: signIn
+      summary: Вход в систему
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  type: object
+                  description: логин и пароль
+              required:
+                - config
+      responses:
+        250:
+          description: Успешный вход
+        251:
+          description: Неверный логин или пароль
+        252:
+          description: Ошибка
+  /start-timer:
+    post:
+      operationId: startTimer
+      summary: Запустить таймер
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  type: object
+                  description: логин и пароль
+                kind:
+                  type: str
+                  description: статус работы
+                  example: exam | lesson | homework | chill
+              required:
+                - config
+                - kind
+      responses:
+        250:
+          description: Начал запись
+        251:
+          description: Ошибка
+  /stop-timer:
+    post:
+      operationId: stopTimer
+      summary: Остановить таймер
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  type: object
+                  description: логин и пароль
+              required:
+                - config
+      responses:
+        250:
+          description: Сохранил время
+        251:
+          description: Ошибка
+  /save-screenshot:
+    post:
+      operationId: saveScreenshot
+      summary: Сохранить скриншот
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  type: object
+                  description: логин и пароль
+                photo:
+                  type: string
+                  description: base64
+              required:
+                - config
+                - photo
+      responses:
+        250:
+          description: Сохранил
+        251:
+          description: Ошибка
+ 
