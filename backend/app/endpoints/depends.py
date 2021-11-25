@@ -1,4 +1,5 @@
 from repositories.users import UserRepository
+from repositories.time import TimeRepository
 from db.base import database
 from models.user import User
 from fastapi import Depends, HTTPException, status
@@ -6,6 +7,9 @@ from core.security import JWTBearer, decode_access_token
 
 def get_user_repository() -> UserRepository:
     return UserRepository(database)
+
+def get_time_repository() -> TimeRepository:
+    return TimeRepository(database)
 
 async def get_current_user(
     users: UserRepository = Depends(get_user_repository),
